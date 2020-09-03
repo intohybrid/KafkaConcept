@@ -7,6 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KafkaConceptApplication {
 
 	public static void main(String[] args) {
+
+		//String rootDirectory=System.getProperty("user.dir")+"/src/main/resources/";
+		//String jassFile = "jaas-spring-client.conf";
+		//dSystem.setProperty("java.security.auth.login.config", rootDirectory+jassFile);
+
 		SpringApplication.run(KafkaConceptApplication.class, args);
 	}
 
