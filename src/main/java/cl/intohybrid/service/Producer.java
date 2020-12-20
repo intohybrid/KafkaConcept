@@ -1,5 +1,7 @@
 package cl.intohybrid.service;
 
+import com.example.Customer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +18,37 @@ public class Producer {
 	private static final String TOPIC = "topic-marcelo";
 
 	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private KafkaTemplate<String, Customer> kafkaTemplate;
 
-	public void sendMessage(String message) {
-		logger.info(String.format("$$ -> Producing message --> %s", message));
-		ListenableFuture<SendResult<String, String>> future = this.kafkaTemplate.send(TOPIC, message);
 
-		future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+	public void sendMessage(String firstName, String lastName, Integer age, String height, String weight, boolean automatedEmail) {
+
+
+		// copied from avro examples
+		Customer customer = Customer.newBuilder()
+				.setAge(age)
+				.setAutomatedEmail(automatedEmail)
+				.setFirstName(firstName)
+				.setLastName(lastName)
+				.setHeight(new Float(height))
+				.setWeight(new Float(weight))
+				.build();
+
+
+		logger.info("Producing message");
+		ListenableFuture<SendResult<String, Customer>> future = this.kafkaTemplate.send(TOPIC, customer.getFirstName() , customer);
+
+		future.addCallback(new ListenableFutureCallback<SendResult<String, Customer>>() {
 
 			@Override
-			public void onSuccess(SendResult<String, String> result) {
+			public void onSuccess(SendResult<String, Customer> message) {
 				System.out.println("Sent message=[" + message +
-						"] with offset=[" + result.getRecordMetadata().offset() + "]");
+						"] with offset=[" + message.getRecordMetadata().offset() + "]");
 			}
 			@Override
 			public void onFailure(Throwable ex) {
 				System.out.println("Unable to send message=["
-						+ message + "] due to : " + ex.getMessage());
+						+ customer + "] due to : " + ex.getMessage());
 			}
 		});
 

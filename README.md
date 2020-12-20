@@ -113,3 +113,10 @@ Lista usuarios
 
 ./bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:marcelo --consumer --topic topic-marcelo --group marcelo-consumer-group
 
+
+/////
+https://www.confluent.io/blog/schema-registry-avro-in-spring-boot-application-tutorial/
+
+
+
+

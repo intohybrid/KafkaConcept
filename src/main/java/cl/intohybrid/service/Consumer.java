@@ -1,5 +1,7 @@
 package cl.intohybrid.service;
 
+import com.example.Customer;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -10,7 +12,8 @@ public class Consumer {
 	private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
 	@KafkaListener(topics = "topic-marcelo")
-	public void consume(String message) {
-		logger.info(String.format("$$ -> Consumed Message -> %s", message));
+	public void consume(ConsumerRecord<String, Customer> record) {
+		Customer customer = record.value();
+		logger.info(String.format("Consumed Message -> %s", customer.toString()));
 	}
 }

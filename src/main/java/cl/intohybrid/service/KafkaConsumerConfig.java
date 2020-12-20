@@ -1,5 +1,6 @@
 package cl.intohybrid.service;
 
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,11 @@ public class KafkaConsumerConfig {
         props.put("ssl.truststore.password", "kafkakeystore");
         props.put("ssl.endpoint.identification.algorithm", "");
 
+        // avro part (deserializer)
+        props.put("key.deserializer", StringDeserializer.class.getName());
+        props.put("value.deserializer", KafkaAvroDeserializer.class.getName());
+        props.put("schema.registry.url", "http://127.0.0.1:8081");
+        props.put("specific.avro.reader", "true");
 
 
         return new DefaultKafkaConsumerFactory<>(props);

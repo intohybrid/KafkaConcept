@@ -1,5 +1,7 @@
 package cl.intohybrid.service;
 
+import com.example.Customer;
+import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +26,7 @@ public class KafkaProducerConfig {
     //private static final String bootstrapAddress = "localhost:9092";
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, Customer> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
 
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
@@ -38,12 +40,16 @@ public class KafkaProducerConfig {
         configProps.put("ssl.truststore.password", "kafkakeystore");
         configProps.put("ssl.endpoint.identification.algorithm", "");
 
+        // avro part
+        configProps.put("key.serializer", StringSerializer.class.getName());
+        configProps.put("value.serializer", KafkaAvroSerializer.class.getName());
+        configProps.put("schema.registry.url", "http://127.0.0.1:8081");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<String, Customer> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
