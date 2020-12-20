@@ -21,15 +21,17 @@ public class KafkaConsumerConfig {
     private static final String SASL_PROTOCOL = "SASL_SSL";
     private static final String SCRAM_SHA_512 = "SCRAM-SHA-512";
     private final String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
-    private final String consJaasCfg = String.format(jaasTemplate, "testjpconsumer", "NoFd5NeqEL");
+    private final String consJaasCfg = String.format(jaasTemplate, "marcelo", "marcelo123");
+    //ssl_sasl
     private static final String bootstrapAddress = "localhost:9094";
+    //private static final String bootstrapAddress = "localhost:9092";
 
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "testjpConsumerGID");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "marcelo-consumer-group");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 

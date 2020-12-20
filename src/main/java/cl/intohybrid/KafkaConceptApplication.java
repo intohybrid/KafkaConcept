@@ -10,7 +10,7 @@ public class KafkaConceptApplication {
 
 		//String rootDirectory=System.getProperty("user.dir")+"/src/main/resources/";
 		//String jassFile = "jaas-spring-client.conf";
-		//dSystem.setProperty("java.security.auth.login.config", rootDirectory+jassFile);
+		//System.setProperty("java.security.auth.login.config", rootDirectory+jassFile);
 
 		SpringApplication.run(KafkaConceptApplication.class, args);
 	}

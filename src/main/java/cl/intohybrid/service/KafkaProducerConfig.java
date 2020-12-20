@@ -18,8 +18,10 @@ public class KafkaProducerConfig {
     private static final String SASL_PROTOCOL = "SASL_SSL";
     private static final String SCRAM_SHA_512 = "SCRAM-SHA-512";
     private final String jaasTemplate = "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"%s\" password=\"%s\";";
-    private final String prodJaasCfg = String.format(jaasTemplate, "testjp2", "ZTLP8gbf7X");
+    private final String prodJaasCfg = String.format(jaasTemplate, "marcelo", "marcelo123");
+    //ssl_sasl
     private static final String bootstrapAddress = "localhost:9094";
+    //private static final String bootstrapAddress = "localhost:9092";
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -29,7 +31,6 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
-        configProps.put(ProducerConfig.CLIENT_ID_CONFIG, "cid1");
         configProps.put("sasl.mechanism", SCRAM_SHA_512);
         configProps.put("sasl.jaas.config", prodJaasCfg);
         configProps.put("security.protocol", SASL_PROTOCOL);

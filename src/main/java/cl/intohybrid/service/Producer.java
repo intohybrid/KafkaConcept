@@ -13,7 +13,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Service
 public class Producer {
 	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
-	private static final String TOPIC = "test-topic2";
+	private static final String TOPIC = "topic-marcelo";
 
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
